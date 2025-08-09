@@ -1,8 +1,6 @@
 # importing all the libraries
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib import animation
-from matplotlib.animation import FuncAnimation
 import matplotlib.colors as colors
 import copy
 import random
