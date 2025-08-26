@@ -554,6 +554,15 @@ def approx_pdf_track_up_to_1_switch(V, Lambda, P, sigma, delta_t, delta_y_track,
                                     scale=np.sqrt(2)*sigma)
 
     def P_dy_giv_sw_1_st1_st2(delta_y, st1, st2):
+
+        def h(t):
+            return V[st1]*t + V[st2]*(delta_t-t)
+        h_0 = h(0)
+        h_delta_t = h(delta_t)
+
+        a = min([h_0, h_delta_t])
+        b = max([h_0, h_delta_t])
+
         if np.abs(V[st1]-V[st2])<=eps: #or maybe check for close enough
             return scipy.stats.norm.pdf(delta_y, loc=V[st1]*delta_t,
                                         scale=np.sqrt(2)*sigma)
@@ -564,16 +573,6 @@ def approx_pdf_track_up_to_1_switch(V, Lambda, P, sigma, delta_t, delta_y_track,
             return res/(b-a)
 
         #otherwise, all the other cases
-
-        def h(t):
-            return V[st1]*t + V[st2]*(delta_t-t)
-        h_0 = h(0)
-        h_delta_t = h(delta_t)
-
-        a = min([h_0, h_delta_t])
-        b = max([h_0, h_delta_t])
-
-
         H = 1/(V[st1]-V[st2])
         s = np.sign(V[st1]-V[st2])
 
